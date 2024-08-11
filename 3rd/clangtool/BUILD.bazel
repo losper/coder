@@ -1,0 +1,12 @@
+load("@rules_foreign_cc//foreign_cc:defs.bzl", "cmake")
+
+filegroup(
+    name = "sources",
+    srcs = glob(["*"]),
+)
+
+cmake(
+    name = "liba",
+    lib_source = ":sources",
+    working_directory = "./",
+)

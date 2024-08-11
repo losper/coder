@@ -1,0 +1,1 @@
+add_library(clangtool static test.cpp)

@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+*.pyc
+*.lock
+__pycache__
+bazel-*

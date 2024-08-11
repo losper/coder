@@ -1,0 +1,32 @@
+load("@pybind11_bazel//:build_defs.bzl", "pybind_extension")
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+cc_library(
+    name = "CppParser",
+    srcs = ["CppParser.cpp"],
+    hdrs = ["CppParser.h"],
+    visibility = ["//visibility:public"],
+    copts = ["-I/usr/local/include"],  # 指定头文件搜索路径
+    linkopts = [
+        "-L/usr/local/lib",
+        "-lLLVMSupport",
+        "-lclangBasic",
+        "-lclangFrontend",
+        "-lclangTooling",
+    ],  # 指定库文件搜索路径和链接库
+)
+
+pybind_extension(
+    name = "basic",
+    srcs = ["basic.cpp", "CppParser.cpp", "CppParser.h"],
+    visibility = ["//visibility:public"],
+    copts = ["-I/usr/local/include"],  # 指定头文件搜索路径
+    linkopts = ["-L/usr/local/lib", "-lclangTooling"],  # 指定库文件搜索路径和链接库
+)
+
+py_library(
+    name = "basic_lib",
+    data = [":basic"],
+    imports = ["."],
+    visibility = ["//visibility:public"],
+)
